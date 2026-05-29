@@ -29,7 +29,7 @@ except Exception as patch_err:
 
 print("Converting Keras model to TensorFlow.js...")
 model_path = os.path.join("model", "model.h5")
-output_path = os.path.join("web", "model_tfjs")
+output_path = os.path.join("docs", "model_tfjs")
 
 if not os.path.exists(model_path):
     print(f"Model file not found at {model_path}!")
