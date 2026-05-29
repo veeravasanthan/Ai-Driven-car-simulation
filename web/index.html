@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autonomous Car Simulation Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- TensorFlow.js Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.20.0/dist/tf.min.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="logo">
+                <span class="logo-icon">🚗</span>
+                <h1>NeuroDrive <span class="badge">AI Engine v1.0</span></h1>
+            </div>
+            <div class="status-indicator">
+                <span class="status-dot pulsing" id="status-dot"></span>
+                <span id="status-text">Loading Model...</span>
+            </div>
+        </header>
+
+        <!-- Main Dashboard Area -->
+        <main class="dashboard-grid">
+            
+            <!-- Left Side: Interactive Simulator -->
+            <section class="panel simulator-panel">
+                <div class="panel-header">
+                    <h2>Simulation Arena</h2>
+                    <div class="panel-actions">
+                        <button id="btn-restart" class="btn btn-secondary">🔄 Reset Car</button>
+                        <button id="btn-change-track" class="btn btn-secondary">🗺️ Switch Track</button>
+                    </div>
+                </div>
+                <div class="canvas-container">
+                    <canvas id="simCanvas"></canvas>
+                </div>
+            </section>
+
+            <!-- Right Side: Diagnostics & Telemetry -->
+            <section class="panel telemetry-panel">
+                <div class="panel-header">
+                    <h2>Real-time Telemetry</h2>
+                </div>
+                
+                <!-- Telemetry Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">Velocity</div>
+                        <div class="stat-value" id="val-speed">0.0 <span class="unit">mph</span></div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" id="bar-speed" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Steering Angle</div>
+                        <div class="stat-value" id="val-steering">0.0°</div>
+                        <div class="steering-wheel-container">
+                            <div class="steering-wheel" id="visual-wheel"></div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Throttle</div>
+                        <div class="stat-value" id="val-throttle">0.0</div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar throttle-bar" id="bar-throttle" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Model Insights Panel -->
+                <div class="insights-section">
+                    <h3>Neural Network Visuals</h3>
+                    <div class="ai-views">
+                        <div class="view-box">
+                            <h4>AI Front Camera Preview (Preprocessed 200x66)</h4>
+                            <div class="frame-container">
+                                <canvas id="modelInputCanvas" width="200" height="66"></canvas>
+                            </div>
+                        </div>
+                        <div class="view-box">
+                            <h4>Sensors (LIDAR Rays)</h4>
+                            <div class="sensor-readouts" id="sensor-bars">
+                                <!-- Dynamic readouts will be inserted here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Control Console -->
+                <div class="control-console">
+                    <h3>Command Console</h3>
+                    <div class="control-mode-selector">
+                        <input type="radio" id="mode-manual" name="control-mode" value="manual" checked>
+                        <label for="mode-manual" class="mode-label">
+                            <span class="icon">🎮</span> Manual Keyboard
+                        </label>
+                        
+                        <input type="radio" id="mode-autonomous" name="control-mode" value="autonomous">
+                        <label for="mode-autonomous" class="mode-label" id="label-autonomous">
+                            <span class="icon">🤖</span> AI Self-Driving
+                        </label>
+                    </div>
+
+                    <div class="control-settings">
+                        <div class="setting-row">
+                            <label for="param-speed">Max Speed Limit</label>
+                            <input type="range" id="param-speed" min="5" max="20" value="10" step="0.5">
+                            <span class="val-display" id="val-max-speed">10.0</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="simulator.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
